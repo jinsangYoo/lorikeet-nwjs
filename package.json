@@ -1,0 +1,15 @@
+{
+  "name": "lorikeet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-jinsangYoo:jinsangYoo/lorikeet-nwjs.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
