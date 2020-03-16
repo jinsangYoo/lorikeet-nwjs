@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-const async = require('async');
-const fs = require('fs');
-const osenv = require('osenv');
-const path = require('path');
+const async = require("async");
+const fs = require("fs");
+const osenv = require("osenv");
+const path = require("path");
 
 function getUserHomeFolder() {
   return osenv.home();
@@ -17,7 +17,7 @@ function inspectAndDescribeFile(filePath, cb) {
   let result = {
     file: path.basename(filePath),
     path: filePath,
-    type: ''
+    type: ""
   };
 
   fs.stat(filePath, (err, stat) => {
@@ -25,10 +25,10 @@ function inspectAndDescribeFile(filePath, cb) {
       cb(err);
     } else {
       if (stat.isFile()) {
-        result.type = 'file';
+        result.type = "file";
       }
       if (stat.isDirectory()) {
-        result.type = 'directory';
+        result.type = "directory";
       }
       cb(err, result);
     }
@@ -36,24 +36,28 @@ function inspectAndDescribeFile(filePath, cb) {
 }
 
 function inspectAndDescribeFiles(folderPath, files, cb) {
-  async.map(files, (file, asyncCb) => {
-    let resolvedFilePath = path.resolve(folderPath, file);
-    inspectAndDescribeFile(resolvedFilePath, asyncCb);
-  }, cb);
+  async.map(
+    files,
+    (file, asyncCb) => {
+      let resolvedFilePath = path.resolve(folderPath, file);
+      inspectAndDescribeFile(resolvedFilePath, asyncCb);
+    },
+    cb
+  );
 }
 
 function displayFile(file) {
-  const mainArea = document.getElementById('main-area');
-  const template = document.querySelector('#item-template');
+  const mainArea = document.getElementById("main-area");
+  const template = document.querySelector("#item-template");
   let clone = document.importNode(template.content, true);
-  clone.querySelector('img').src = `images/${file.type}.svg`;
-  clone.querySelector('.filename').innerText = file.file;
+  clone.querySelector("img").src = `images/${file.type}.svg`;
+  clone.querySelector(".filename").innerText = file.file;
   mainArea.appendChild(clone);
 }
 
 function displayFiles(err, files) {
   if (err) {
-    return alert('Sorry, we could not display your files.');
+    return alert("Sorry, we could not display your files.");
   }
 
   files.forEach(displayFile);
@@ -63,7 +67,7 @@ function main() {
   const folderPath = getUserHomeFolder();
   getFilesInFolder(folderPath, (err, files) => {
     if (err) {
-      return alert('Sorry, we could not load your home folder.');
+      return alert("Sorry, we could not load your home folder.");
     }
     inspectAndDescribeFiles(folderPath, files, displayFiles);
   });
